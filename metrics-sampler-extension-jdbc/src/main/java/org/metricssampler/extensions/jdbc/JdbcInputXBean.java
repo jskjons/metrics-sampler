@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.metricssampler.config.InputConfig;
 import org.metricssampler.config.loader.xbeans.InputXBean;
+import org.metricssampler.util.StringUtils;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
@@ -27,7 +28,9 @@ public class JdbcInputXBean extends InputXBean {
 	protected void validate() {
 		super.validate();
 		notEmpty(this, "pool", getPool());
-		notEmpty(this, "queries", getQueries());
+		if (StringUtils.isEmptyOrNull(sharedQueries)) {
+		    notEmpty(this, "queries", getQueries());
+		}
 	}
 
 	@Override

@@ -18,5 +18,6 @@
 			<query>select 'first' from dual</query>
 			<query>select 'second' from dual</query>
 		</jdbc>
+		<jdbc name="jdbc2" pool="pool" shared-queries="shared-queries"/>
 	</inputs>
 </configuration>

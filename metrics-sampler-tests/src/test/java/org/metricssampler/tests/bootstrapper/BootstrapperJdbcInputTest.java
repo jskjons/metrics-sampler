@@ -14,8 +14,10 @@ public class BootstrapperJdbcInputTest extends BootstrapperTestBase {
 	public void bootstrapComplete() {
 		final Configuration config = configure("jdbc/complete.xml");
 		
-		final JdbcInputConfig item = assertSingleInput(config, JdbcInputConfig.class);
+		final JdbcInputConfig item = assertInput(config, "jdbc", JdbcInputConfig.class);
 		assertComplete(config, item);
+		
+		assertInput(config, "jdbc2", JdbcInputConfig.class);
 	}
 
 	private void assertComplete(final Configuration config, final JdbcInputConfig item) {

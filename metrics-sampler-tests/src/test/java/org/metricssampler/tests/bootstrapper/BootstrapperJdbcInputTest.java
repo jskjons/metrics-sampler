@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.metricssampler.config.Configuration;
 import org.metricssampler.extensions.jdbc.JdbcConnectionPoolConfig;
 import org.metricssampler.extensions.jdbc.JdbcInputConfig;
+import org.metricssampler.extensions.jdbc.JdbcSharedQueriesConfig;
 
 public class BootstrapperJdbcInputTest extends BootstrapperTestBase {
 	@Test
@@ -25,7 +26,7 @@ public class BootstrapperJdbcInputTest extends BootstrapperTestBase {
 		assertTrue(item.getQueries().contains("select 'second' from dual"));
 		assertSingleStringVariable(item.getVariables(), "string", "value");
 		
-		final JdbcConnectionPoolConfig pool = assertSingleSharedResource(config, JdbcConnectionPoolConfig.class);
+		final JdbcConnectionPoolConfig pool = assertSharedResource(config, "pool", JdbcConnectionPoolConfig.class);
 		assertEquals("pool", pool.getName());
 		assertEquals("username", pool.getUsername());
 		assertEquals("password", pool.getPassword());
@@ -34,6 +35,9 @@ public class BootstrapperJdbcInputTest extends BootstrapperTestBase {
 		assertEquals(10, pool.getMinSize());
 		assertEquals(20, pool.getMaxSize());
 		assertEquals(3, pool.getLoginTimeout());
+		
+		JdbcSharedQueriesConfig queries = assertSharedResource(config, "shared-queries", JdbcSharedQueriesConfig.class);
+		assertEquals(2, queries.getQueries().size());
 	}
 
 	@Test

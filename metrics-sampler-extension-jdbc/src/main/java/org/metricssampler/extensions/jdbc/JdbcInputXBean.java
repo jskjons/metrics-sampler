@@ -16,6 +16,10 @@ public class JdbcInputXBean extends InputXBean {
 	@XStreamAsAttribute
 	private String pool;
 
+	@XStreamAsAttribute
+	@XStreamAlias("shared-queries")
+    private String sharedQueries;
+	
 	@XStreamImplicit(itemFieldName="query")
 	private List<String> queries;
 	
@@ -28,7 +32,7 @@ public class JdbcInputXBean extends InputXBean {
 
 	@Override
 	protected InputConfig createConfig() {
-		return new JdbcInputConfig(getName(), getVariablesConfig(), getPool(), getQueries());
+		return new JdbcInputConfig(getName(), getVariablesConfig(), getPool(), getQueries(), sharedQueries);
 	}
 
 	
@@ -47,4 +51,12 @@ public class JdbcInputXBean extends InputXBean {
 	public void setQueries(final List<String> queries) {
 		this.queries = queries;
 	}
+
+    public String getSharedQueries() {
+        return sharedQueries;
+    }
+
+    public void setSharedQueries(String sharedQueries) {
+        this.sharedQueries = sharedQueries;
+    }
 }

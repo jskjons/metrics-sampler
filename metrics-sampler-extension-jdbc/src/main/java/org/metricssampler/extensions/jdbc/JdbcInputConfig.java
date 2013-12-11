@@ -11,12 +11,14 @@ import org.metricssampler.config.InputConfig;
 
 public class JdbcInputConfig extends InputConfig {
 	private final String pool;
+	private final String sharedQueries;
 	private final List<String> queries;
 	
-	public JdbcInputConfig(final String name, final Map<String, Object> variables, final String pool, final List<String> queries) {
+	public JdbcInputConfig(final String name, final Map<String, Object> variables, final String pool, final List<String> queries, String sharedQueries) {
 		super(name, variables);
 		checkArgumentNotNull(pool, "pool");
 		checkArgumentNotNullNorEmpty(queries, "queries");
+		this.sharedQueries = sharedQueries;
 		this.pool= pool;
 		this.queries = Collections.unmodifiableList(queries);
 	}
@@ -28,4 +30,8 @@ public class JdbcInputConfig extends InputConfig {
 	public List<String> getQueries() {
 		return queries;
 	}
+
+    public String getSharedQueries() {
+        return sharedQueries;
+    }
 }

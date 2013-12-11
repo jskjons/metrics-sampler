@@ -5,9 +5,13 @@
 				<entry key="key" value="value" />
 			</options>
 		</jdbc-connection-pool>
+		<jdbc-shared-queries name="shared-queries">
+		  <query>select 'first-shared' from dual</query>
+		  <query>select 'second-shared' from dual</query>
+		</jdbc-shared-queries>
 	</shared-resources>
 	<inputs>
-		<jdbc name="jdbc" pool="pool">
+		<jdbc name="jdbc" pool="pool" shared-queries="shared-queries">
 			<variables>
 				<string name="string" value="value" />
 			</variables>

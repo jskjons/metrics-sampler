@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.metricssampler.config.ConfigurationException;
@@ -21,17 +22,19 @@ import org.metricssampler.reader.SimpleMetricName;
 public class JdbcMetricsReader extends AbstractMetricsReader<JdbcInputConfig> implements BulkMetricsReader {
 	private final JdbcConnectionPool connectionPool;
 	private Connection connection;
+    private List<String> sharedQueries;
 
-	public JdbcMetricsReader(final JdbcInputConfig config, final JdbcConnectionPool connectionPool) {
+	public JdbcMetricsReader(final JdbcInputConfig config, final JdbcConnectionPool connectionPool, List<String> sharedQueries) {
 		super(config);
 		this.connectionPool = connectionPool;
+        this.sharedQueries = sharedQueries;
 	}
 
 	@Override
 	public void open() throws MetricReadException {
 		try {
 			logger.debug("Fetching connection from pool {}", config.getPool());
-			this.connection = connectionPool.getConnection();
+			connection = connectionPool.getConnection();
 		} catch (final SQLException e) {
 			throw new OpenMetricsReaderException(e);
 		}
@@ -72,6 +75,9 @@ public class JdbcMetricsReader extends AbstractMetricsReader<JdbcInputConfig> im
 		for (final String query : config.getQueries()) {
 			readMetricsFromQuery(query, result);
 		}
+		for (final String query : sharedQueries) {
+            readMetricsFromQuery(query, result);
+        }
 		return result;
 	}
 

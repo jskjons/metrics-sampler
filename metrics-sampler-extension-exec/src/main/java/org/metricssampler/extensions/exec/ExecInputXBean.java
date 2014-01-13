@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.metricssampler.config.loader.xbeans.ArgumentXBean;
 import org.metricssampler.config.loader.xbeans.EntryXBean;
 import org.metricssampler.config.loader.xbeans.InputXBean;
 

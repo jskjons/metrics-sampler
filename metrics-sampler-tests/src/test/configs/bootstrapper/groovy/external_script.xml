@@ -1,0 +1,5 @@
+<configuration>
+	<inputs>
+		<groovy name="groovy_external_script" scriptFile="test.groovy"/>
+	</inputs>
+</configuration>

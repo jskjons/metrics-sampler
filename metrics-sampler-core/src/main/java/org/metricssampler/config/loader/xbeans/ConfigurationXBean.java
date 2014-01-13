@@ -1,5 +1,6 @@
 package org.metricssampler.config.loader.xbeans;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -87,22 +88,23 @@ public class ConfigurationXBean {
 		this.sharedResources = sharedResources;
 	}
 
-	public Configuration toConfig() {
+	public Configuration toConfig(File file) {
 		final Map<String, Object> globalVariables = VariableXBean.toMap(getVariables());
 		final Map<String, SharedResourceConfig> sharedResources = configureSharedResources(getSharedResources());
-		final Map<String, InputConfig> inputs = configureInputs(getInputs());
+		final Map<String, InputConfig> inputs = configureInputs(getInputs(), file);
 		final Map<String, OutputConfig> outputs = configureOutputs(getOutputs());
 		final Map<String, List<SelectorConfig>> selectorGroups = configureSelectorGroups(getSelectorGroups());
 		final List<SamplerConfig> samplers = configureSamplers(getSamplers(), inputs, outputs, selectorGroups, globalVariables);
 		return new Configuration(inputs.values(), outputs.values(), samplers, globalVariables, sharedResources);
 	}
 
-	private Map<String, InputConfig> configureInputs(final List<InputXBean> list) {
+	private Map<String, InputConfig> configureInputs(final List<InputXBean> list, File configFile) {
 		final LinkedHashMap<String, InputXBean> xbeans = TemplatableXBeanUtils.sortByDependency(list);
 
 		final Map<String, InputConfig> result = new HashMap<String, InputConfig>();
 		for (final InputXBean fromItem : xbeans.values()) {
 			TemplatableXBeanUtils.applyTemplate(fromItem, xbeans);
+			fromItem.setConfigFile(configFile);
 			if (fromItem.isInstantiatable()) {
 				final InputConfig item = fromItem.toConfig();
 				if (result.containsKey(item.getName())) {

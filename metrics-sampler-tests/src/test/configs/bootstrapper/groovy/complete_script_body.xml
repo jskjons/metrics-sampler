@@ -1,0 +1,16 @@
+<configuration>
+	<inputs>
+		<groovy name="groovy_complete_script_body">
+		    <variables>
+                <string name="string" value="value" />
+            </variables>
+			<arguments>
+				<argument>arg1</argument>
+				<argument>arg2</argument>
+			</arguments>
+			<script>
+			     println 'hello world'
+			</script>
+		</groovy> 
+	</inputs>
+</configuration>

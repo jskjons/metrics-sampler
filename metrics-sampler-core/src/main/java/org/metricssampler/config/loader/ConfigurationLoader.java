@@ -48,7 +48,7 @@ public class ConfigurationLoader {
 		final XStream xstream = createXStream();
 		try {
 			final ConfigurationXBean result = loadFile(file, xstream);
-			return result.toConfig();
+			return result.toConfig(file);
 		} catch (final XStreamException e) {
 			throw new ConfigurationException("Failed to load configuration from \"" + file.getAbsolutePath() + "\"", e);
 		} catch (final FileNotFoundException e) {

@@ -56,6 +56,7 @@
 		<module>metrics-sampler-tests</module>
 		<module>metrics-sampler-extension-webmethods</module>
 		<module>metrics-sampler-extension-exec</module>
+		<module>metrics-sampler-extension-groovy</module>
 	</modules>
 	<build>
 		<pluginManagement>

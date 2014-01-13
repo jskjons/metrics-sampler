@@ -1,4 +1,4 @@
-package org.metricssampler.extensions.exec;
+package org.metricssampler.config.loader.xbeans;
 
 import static org.metricssampler.config.loader.xbeans.ValidationUtils.notEmpty;
 
@@ -11,7 +11,7 @@ import com.thoughtworks.xstream.converters.extended.ToAttributedValueConverter;
 public class ArgumentXBean {
 	private String value;
 
-	protected void validate() {
+	public void validate() {
 		notEmpty(this, "value", getValue());
 	}
 

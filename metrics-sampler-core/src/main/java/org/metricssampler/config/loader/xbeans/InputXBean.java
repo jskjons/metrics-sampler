@@ -1,5 +1,6 @@
 package org.metricssampler.config.loader.xbeans;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.metricssampler.config.InputConfig;
  */
 public abstract class InputXBean extends TemplatableXBean {
 	private List<VariableXBean> variables;
+	private File configFile;
 	
 	public List<VariableXBean> getVariables() {
 		return variables;
@@ -40,4 +42,12 @@ public abstract class InputXBean extends TemplatableXBean {
 	}
 	
 	protected abstract InputConfig createConfig();
+
+    public File getConfigFile() {
+        return configFile;
+    }
+
+    public void setConfigFile(File configFile) {
+        this.configFile = configFile;
+    }
 }
